@@ -13,7 +13,8 @@
 //add search and display by search result -- done
 
 //add change option
-
+//strncopy() -- done
+//add strncmp() and validate string -- done
 
 int main(int argc, char *argv[]){
     char pass[10];
@@ -38,12 +39,12 @@ int main(int argc, char *argv[]){
         char arg1[len + 1];
         char arg2[len2 + 1];
         char *pass;
-        strcpy(arg1, argv[1]);
-        strcpy(arg2, argv[2]);
+        strncpy(arg1, argv[1], sizeof(arg1));
+        strncpy(arg2, argv[2], sizeof(arg2));
         pass = ReadPass();
-        if(strcmp(arg1, pass) == 0 && strcmp(arg2, "list\0") == 0){
+        if(strncmp(arg1, pass, 8) == 0 && strncmp(arg2, "list\0", 5) == 0){
             ListAll();
-        }else if(strcmp(arg1, pass) == 0 && strcmp(arg2, "new\0") == 0){
+        }else if(strncmp(arg1, pass, 8) == 0 && strncmp(arg2, "new\0", 5) == 0){
             char fullname[20];
             int len_full = 0;
             char alias[20];
@@ -59,9 +60,9 @@ int main(int argc, char *argv[]){
                 WriteToFile(len_full, len_alias, len_pass, 
                         fullname, alias, password);
             }
-        }else if(strcmp(arg1, pass) == 0 && arg2 != NULL){
+        }else if(strncmp(arg1, pass, 8) == 0 && arg2 != NULL){
             FindWord(arg2);
-        }else if(strcmp(arg1, pass) == 0){
+        }else if(strncmp(arg1, pass, 8) == 0){
             printf("No idea why\n");
         }
         return 0;
